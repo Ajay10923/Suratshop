@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suratshop - Seller Dashboard: Add New Product</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="addproduct.css">
+</head>
+<body>
+
+    <header class="main-header">
+        <div class="brand-section">
+            <img src="Suratshoplogo.png" alt="Suratshop Logo" class="brand-logo">
+            <h1 class="brand-heading">Suratshop</h1>
+        </div>
+        <nav class="main-nav-links">
+            <a href="homepage.html">Home</a>
+            <a href="about us">About Us</a>
+            <a href="#contact">Contact</a>
+            <a href="login.html" class="account-link">
+                <i class="fas fa-user-circle"></i> Account
+            </a>
+        </nav>
+    </header>
+
+    <div class="dashboard-wrapper">
+        <aside class="sidebar">
+            <h2>Seller Dashboard</h2>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="seller-dashboard-overview.html"><i class="fas fa-tachometer-alt"></i> Overview</a></li>
+                    <li><a href="seller-dashboard-orders.html"><i class="fas fa-box-open"></i> Orders</a></li>
+                    <li><a href="myproduct.html" class="active"><i class="fas fa-tag"></i>My products</a></li>
+                    <li><a href="seller-dashboard-analytics.html"><i class="fas fa-chart-bar"></i> Analytics</a></li>
+                    <li><a href="seller-dashboard-settings.html"><i class="fas fa-cog"></i> Settings</a></li>
+                    <li><a href="login.html"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="dashboard-content">
+            <h1>Add New Product</h1>
+
+            <div class="add-product-form-container">
+                <h2>Product Details</h2>
+                <form class="add-product-form" id="addProductForm" action="#" method="POST" enctype="multipart/form-data">
+
+                    <div class="form-group full-width">
+                        <label for="productName">Product Name <span style="color: red;">*</span></label>
+                        <input type="text" id="productName" name="productName" placeholder="e.g., Men's Casual Denim Shirt" required>
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label for="productDescription">Product Description <span style="color: red;">*</span></label>
+                        <textarea id="productDescription" name="productDescription" rows="6" placeholder="Provide a detailed description of your product, including features, materials, and benefits." required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="price">Price (₹) <span style="color: red;">*</span></label>
+                        <input type="number" id="price" name="price" step="0.01" min="0" placeholder="e.g., 799.00" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="stock">Stock Quantity <span style="color: red;">*</span></label>
+                        <input type="number" id="stock" name="stock" min="0" placeholder="e.g., 100" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="category">Category <span style="color: red;">*</span></label>
+                        <select id="category" name="category" required>
+                            <option value="">Select Category</option>
+                            <option value="mens-fashion">Men's Fashion</option>
+                            <option value="womens-fashion">Women's Fashion</option>
+                            <option value="electronics">Electronics</option>
+                            <option value="home-living">Home & Living</option>
+                            <option value="books-media">Books & Media</option>
+                            <option value="sports-fitness">Sports & Fitness</option>
+                            <option value="beauty-health">Beauty & Health</option>
+                            <option value="kids-toys">Kids & Toys</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="subCategory">Sub-Category</label>
+                        <select id="subCategory" name="subCategory">
+                            <option value="">Select Sub-Category (Optional)</option>
+                            </select>
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label for="productImages">Product Images <span style="color: red;">*</span> (Max 5 files)</label>
+                        <input type="file" id="productImages" name="productImages[]" accept="image/*" multiple required>
+                        <div class="image-upload-preview" id="imagePreview">
+                            No images selected.
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="productCondition">Product Condition <span style="color: red;">*</span></label>
+                        <select id="productCondition" name="productCondition" required>
+                            <option value="">Select Condition</option>
+                            <option value="new">New</option>
+                            <option value="old">Used (Old)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="sku">SKU (Stock Keeping Unit) - Optional</label>
+                        <input type="text" id="sku" name="sku" placeholder="e.g., SHIRT-DNM-M-001">
+                    </div>
+
+                    <div class="form-actions full-width">
+                        <button type="button" class="cancel-btn" onclick="location.href='myproduct.html'">Cancel</button>
+                        <button type="submit" class="submit-btn">Add Product</button>
+                    </div>
+                </form>
+            </div>
+        </main>
+    </div>
+
+    <footer class="main-footer">
+        <p>&copy; 2025 Suratshop. All rights reserved. | <a href="#privacy">Privacy Policy</a> | <a href="#terms">Terms of Service</a></p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // --- Image Upload Preview Logic ---
+            const productImagesInput = document.getElementById('productImages');
+            const imagePreviewContainer = document.getElementById('imagePreview');
+
+            productImagesInput.addEventListener('change', function() {
+                imagePreviewContainer.innerHTML = ''; // Clear previous previews
+                if (this.files.length === 0) {
+                    imagePreviewContainer.textContent = 'No images selected.';
+                    return;
+                }
+
+                if (this.files.length > 5) {
+                    alert('You can upload a maximum of 5 images.');
+                    this.value = ''; // Clear selected files
+                    imagePreviewContainer.textContent = 'No images selected.';
+                    return;
+                }
+
+                Array.from(this.files).forEach(file => {
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        const previewItem = document.createElement('div');
+                        previewItem.classList.add('image-preview-item');
+
+                        const img = document.createElement('img');
+                        img.src = e.target.result;
+                        img.alt = 'Product Image';
+
+                        const removeBtn = document.createElement('button');
+                        removeBtn.classList.add('remove-image');
+                        removeBtn.innerHTML = '&times;'; // 'x' icon
+                        removeBtn.title = 'Remove image';
+                        removeBtn.addEventListener('click', function() {
+                            previewItem.remove();
+                            if (imagePreviewContainer.children.length === 0) {
+                                imagePreviewContainer.textContent = 'No images selected.';
+                            }
+                        });
+
+                        previewItem.appendChild(img);
+                        previewItem.appendChild(removeBtn);
+                        imagePreviewContainer.appendChild(previewItem);
+                    };
+                    reader.readAsDataURL(file);
+                });
+            });
+
+            // --- Dynamic Sub-Category Population Logic ---
+            const categorySelect = document.getElementById('category');
+            const subCategorySelect = document.getElementById('subCategory');
+
+            const subCategories = {
+                "mens-fashion": ["Shirts", "Trousers", "Footwear", "Accessories", "Ethnic Wear"],
+                "womens-fashion": ["Dresses", "Sarees & Kurtis", "Tops & Tunics", "Footwear", "Jewellery"],
+                "electronics": ["Mobile Phones", "Laptops", "Headphones & Speakers", "Cameras", "Home Appliances"],
+                "home-living": ["Bedding & Linen", "Furniture", "Kitchen & Dining", "Home Decor", "Lighting"],
+                "books-media": ["Fiction", "Non-Fiction", "Music", "Movies & TV Shows"],
+                "sports-fitness": ["Gym Equipment", "Sports Apparel", "Outdoor Gear", "Yoga & Meditation"],
+                "beauty-health": ["Skincare", "Makeup", "Haircare", "Fragrances", "Wellness Products"],
+                "kids-toys": ["Baby Essentials", "Educational Toys", "Action Figures", "Board Games"]
+            };
+
+            categorySelect.addEventListener('change', function() {
+                const selectedCategory = this.value;
+                subCategorySelect.innerHTML = '<option value="">Select Sub-Category (Optional)</option>'; // Reset sub-categories
+
+                if (selectedCategory && subCategories[selectedCategory]) {
+                    subCategories[selectedCategory].forEach(subCat => {
+                        const option = document.createElement('option');
+                        option.value = subCat.toLowerCase().replace(/ & /g, '-').replace(/ /g, '-');
+                        option.textContent = subCat;
+                        subCategorySelect.appendChild(option);
+                    });
+                }
+            });
+
+            // --- Form Submission Logic ---
+            const addProductForm = document.getElementById('addProductForm');
+            addProductForm.addEventListener('submit', function(event) {
+                event.preventDefault(); // Prevent default form submission
+
+                // Basic validation example
+                if (!productImagesInput.files.length) {
+                    alert('Please upload at least one product image.');
+                    return;
+                }
+                if (productImagesInput.files.length > 5) {
+                    alert('You can upload a maximum of 5 images.');
+                    return;
+                }
+
+                const formData = new FormData(this);
+                
+                console.log('--- Form Data ---');
+                for (let [key, value] of formData.entries()) {
+                    if (key === 'productImages[]') {
+                        console.log(`${key}:`, value.name, `(${value.size} bytes)`);
+                    } else {
+                        console.log(`${key}: ${value}`);
+                    }
+                }
+                console.log('-----------------');
+
+                alert('Product Added Successfully!'); // User ko batane ke liye ki product add ho gaya
+
+                // Redirect to my product sellerpage.html after a short delay
+                setTimeout(() => {
+                    window.location.href = 'my product sellerpage.html'; 
+                }, 1500); // 1.5 seconds ka delay for alert to be seen
+            });
+        });
+    </script>
+
+</body>
+</html>

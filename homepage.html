@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="It is a shoping and selling website">
+    <title>Suratshop - Unified Header</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="homepage.css">
+</head>
+
+<body>
+
+    <header class="main-header">
+        <div class="brand-section">
+            <img src="Suratshoplogo.png" alt="Suratshop Logo" class="brand-logo">
+            <h1 class="brand-heading">Suratshop</h1>
+        </div>
+        <nav class="main-icon">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+        </nav>
+        <nav class="main-nav-links">
+            <a target="_blank" href="homepage.html" class="account-link"> Home</a>
+            <a target="_blank" href="overview.html" class="account-link"> <i class="fas fa-shopping-cart"></i>sellerpage</a>
+            <a target="_blank" href="about us.html" class="account-link" >About Us</a>
+            <a target="_blank" href="#contact" class="account-link">Contact</a>
+            <a target="_blank" href="login.html" class="account-link"><i class="fas fa-user-circle"></i> Account</a>
+            <a target="_blank" href="cart.html" class="account-link"> <i class="fas fa-shopping-cart"></i> Cart</a>
+        </nav>
+    </header>
+
+    <div class="category-nav-wrapper">
+        <div class="filter-section">
+            <span class="filter-label">Condition:</span>
+            <select id="conditionFilter" class="filter-select">
+                <option value="all">All</option>
+                <option value="new">New</option>
+                <option value="old">Old</option>
+            </select>
+        </div>
+
+        <div class="filter-section">
+            <span class="filter-label">Sort By:</span>
+            <select id="sortByOrder" class="filter-select">
+                <option value="default">Default</option>
+                <option value="popularity">Popularity</option>
+                <option value="price-asc">Price: Low to High</option>
+                <option value="price-desc">Price: High to Low</option>
+                <option value="name-asc">Name: A to Z</option>
+                <option value="name-desc">Name: Z to A</option>
+            </select>
+        </div>
+
+        <div class="filter-section no-select">
+            <span class="filter-label">Categories:</span>
+        </div>
+
+        <nav class="category-nav" id="categoryScrollContainer">
+            <ul class="category-list">
+                <li class="category-item">
+                    <button class="category-toggle-btn" data-target="mensFashionSubMenu" aria-expanded="false"
+                        aria-controls="mensFashionSubMenu">
+                        Men's Fashion <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <ul class="sub-category-menu" id="mensFashionSubMenu">
+                        <li><a target="_blank" href="#mens-shirts">Shirts</a></li>
+                        <li><a target="_blank" href="#mens-trousers">Trousers</a></li>
+                        <li><a target="_blank" href="#mens-footwear">Footwear</a></li>
+                        <li><a target="_blank" href="#mens-accessories">Accessories</a></li>
+                        <li><a target="_blank" href="#mens-ethnic">Ethnic Wear</a></li>
+                    </ul> target="_blank"
+                </li>
+                <li class="category-item">
+                    <button class="category-toggle-btn" data-target="womensFashionSubMenu" aria-expanded="false"
+                        aria-controls="womensFashionSubMenu">
+                        Women's Fashion <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <ul class="sub-category-menu" id="womensFashionSubMenu">
+                        <li><a target="_blank" href="#womens-dresses">Dresses</a></li>
+                        <li><a target="_blank" href="#womens-sarees">Sarees & Kurtis</a></li>
+                        <li><a target="_blank" href="#womens-tops">Tops & Tunics</a></li>
+                        <li><a target="_blank" href="#womens-footwear">Footwear</a></li>
+                        <li><a target="_blank" href="#womens-jewellery">Jewellery</a></li>
+                    </ul>
+                </li>
+                <li class="category-item">
+                    <button class="category-toggle-btn" data-target="electronicsSubMenu" aria-expanded="false"
+                        aria-controls="electronicsSubMenu">
+                        Electronics <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <ul class="sub-category-menu" id="electronicsSubMenu">
+                        <li><a target="_blank" href="#mobile-phones">Mobile Phones</a></li>
+                        <li><a target="_blank" href="#laptops">Laptops</a></li>
+                        <li><a target="_blank" href="#headphones">Headphones & Speakers</a></li>
+                        <li><a target="_blank" href="#cameras">Cameras</a></li>
+                        <li><a target="_blank" href="#appliances">Home Appliances</a></li>
+                    </ul>
+                </li>
+                <li class="category-item">
+                    <button class="category-toggle-btn" data-target="homeLivingSubMenu" aria-expanded="false"
+                        aria-controls="homeLivingSubMenu">
+                        Home & Living <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <ul class="sub-category-menu" id="homeLivingSubMenu">
+                        <li><a target="_blank" href="#bedding">Bedding & Linen</a></li>
+                        <li><a target="_blank" href="#furniture">Furniture</a></li>
+                        <li><a target="_blank" href="#kitchenware">Kitchen & Dining</a></li>
+                        <li><a target="_blank" href="#decor">Home Decor</a></li>
+                        <li><a target="_blank" href="#lighting">Lighting</a></li>
+                    </ul>
+                </li>
+                <li class="category-item">
+                    <button class="category-toggle-btn" data-target="booksMediaSubMenu" aria-expanded="false"
+                        aria-controls="booksMediaSubMenu">
+                        Books & Media <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <ul class="sub-category-menu" id="booksMediaSubMenu">
+                        <li><a target="_blank" href="#fiction-books">Fiction</a></li>
+                        <li><a target="_blank" href="#non-fiction-books">Non-Fiction</a></li>
+                        <li><a target="_blank" href="#music">Music</a></li>
+                        <li><a target="_blank" href="#movies">Movies & TV Shows</a></li>
+                    </ul>
+                </li>
+                <li class="category-item">
+                    <button class="category-toggle-btn" data-target="sportsFitnessSubMenu" aria-expanded="false"
+                        aria-controls="sportsFitnessSubMenu">
+                        Sports & Fitness <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <ul class="sub-category-menu" id="sportsFitnessSubMenu">
+                        <li><a target="_blank" href="#gym-equipment">Gym Equipment</a></li>
+                        <li><a target="_blank" href="#sports-apparel">Sports Apparel</a></li>
+                        <li><a target="_blank" href="#outdoor-gear">Outdoor Gear</a></li>
+                        <li><a target="_blank" href="#yoga-meditation">Yoga & Meditation</a></li>
+                    </ul>
+                </li>
+                <li class="category-item">
+                    <button class="category-toggle-btn" data-target="beautyHealthSubMenu" aria-expanded="false"
+                        aria-controls="beautyHealthSubMenu">
+                        Beauty & Health <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <ul class="sub-category-menu" id="beautyHealthSubMenu">
+                        <li><a target="_blank" target="_blank" href="#skincare">Skincare</a></li>
+                        <li><a target="_blank" target="_blank" href="#makeup">Makeup</a></li>
+                        <li><a target="_blank" target="_blank" href="#haircare">Haircare</a></li>
+                        <li><a target="_blank" target="_blank" href="#fragrances">Fragrances</a></li>
+                        <li><a target="_blank" target="_blank" href="#wellness">Wellness Products</a></li>
+                    </ul>
+                </li>
+                <li class="category-item">
+                    <button class="category-toggle-btn" data-target="kidsToysSubMenu" aria-expanded="false"
+                        aria-controls="kidsToysSubMenu">
+                        Kids & Toys <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <ul class="sub-category-menu" id="kidsToysSubMenu">
+                        <li><a target="_blank" href="#baby-essentials">Baby Essentials</a></li>
+                        <li><a target="_blank" href="#educational-toys">Educational Toys</a></li>
+                        <li><a target="_blank" href="#action-figures">Action Figures</a></li>
+                        <li><a target="_blank" href="#board-games">Board Games</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    <main class="content-section">
+        <h1>Welcome to Suratshop!</h1>
+        <p>Discover the latest trends and products.</p>
+        <p>The header now features a unified color scheme, and the sidebar is clearly organized.</p>
+        <p>Use the **Condition** filter for "New," "Old," or "All" items.</p>
+        <p>Use the **Sort By** filter to order products by price, popularity, and more.</p>
+        <p>Click on any category to explore its sub-categories.</p>
+    </main>
+    <script src="homepage.js"></script>
+
+</body>
+
+</html>
