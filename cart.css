@@ -1,0 +1,100 @@
+ /* Base Styles & Reset */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            background-color: #f0f2f5; /* Light grey background */
+            color: #333;
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Header & Main Navigation (Primary Bar) */
+        .main-header {
+            background-color: #2c3e50; /* Darker blue/grey */
+            color: white;
+            padding: 10px 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .brand-section {
+            display: flex;
+            align-items: center;
+        }
+
+        .brand-logo {
+            height: 45px;
+            width: 45px;
+            margin-right: 15px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .brand-heading {
+            font-size: 1.8em;
+            margin: 0;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .main-nav-links {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            flex-wrap: wrap;
+        }
+
+        .main-nav-links a {
+            padding: 10px 0;
+            transition: color 0.3s ease, background-color 0.3s ease;
+            position: relative;
+        }
+
+        .main-nav-links a:hover {
+            color: #3498db; /* Changed hover color to match highlight */
+        }
+
+        .main-nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: #3498db;
+            transition: width 0.3s ease;
+        }
+
+        .main-nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .account-link { /* This class is now used for both Account and Cart */
+            display: flex;
+            align-items: center;
+            color: white; /* Keep text white */
+            padding: 8px 12px;
+            border-radius: 5px;
+        }
+
+        .account-link:hover {
+            color: #3498db; /* Apply the hover color directly to the text */
+        }
+
+        .account-link i {
+            margin-right: 8px;
+            font-size: 1.1em;
+        }

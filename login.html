@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suratshop - Login/Signup</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* General Body Styles */
+        body {
+            font-family: 'Poppins', sans-serif; /* Using Poppins font */
+            margin: 0;
+            background: linear-gradient(135deg, #a8c0ff, #3498db); /* Gradient background */
+            display: flex;
+            justify-content: center; /* Center horizontally */
+            align-items: center;   /* Center vertically */
+            min-height: 100vh;     /* Full viewport height ensures vertical centering works */
+            color: #333;
+            /* REMOVED: overflow: hidden; */ /* This line was preventing scrolling */
+            /* Added min-width for very small screens to ensure content isn't squashed horizontally */
+            min-width: 320px;
+        }
+
+        /* Authentication Container (holds both forms) */
+        .auth-container {
+            background-color: #ffffff;
+            padding: 45px;
+            border-radius: 12px;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 420px;
+            text-align: center;
+            box-sizing: border-box;
+            position: relative;
+            overflow: hidden; /* Keep this here for the internal animation of forms if needed, but not on body */
+            animation: fadeIn 0.8s ease-out; /* Fade-in animation for the container */
+            /* Added margin-block (top/bottom) for spacing when content overflows and scrolling occurs */
+            margin-block: 20px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .auth-container h2 {
+            margin-bottom: 30px;
+            color: #2c3e50;
+            font-size: 2.2em;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        /* Form Group for Inputs */
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #555;
+            font-size: 0.95em;
+        }
+
+        .form-group input {
+            width: calc(100% - 40px); /* Full width minus icon space */
+            padding: 14px 15px 14px 45px; /* More padding and space for icon */
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1em;
+            box-sizing: border-box;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .form-group input:focus {
+            border-color: #3498db;
+            box-shadow: 0 0 10px rgba(52, 152, 219, 0.3);
+            outline: none;
+        }
+
+        /* Input Icons */
+        .form-group i {
+            position: absolute;
+            left: 18px;
+            top: 66%;
+            transform: translateY(-50%);
+            color: #95a5a6;
+            font-size: 1.2em;
+        }
+
+        /* Password Toggle Button */
+        .password-toggle {
+            position: absolute;
+            right: 15px;
+            top: 66%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: #95a5a6;
+            cursor: pointer;
+            font-size: 1em;
+            padding: 5px;
+            z-index: 2;
+        }
+        .password-toggle:hover {
+            color: #3498db;
+        }
+
+        /* Options Group (Remember Me / Forgot Password) */
+        .options-group {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            font-size: 0.9em;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #666;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            cursor: pointer;
+            width: 16px;
+            height: 16px;
+            accent-color: #3498db;
+        }
+
+        .forgot-password {
+            color: #3498db;
+            text-decoration: none;
+            transition: color 0.2s ease, text-decoration 0.2s ease;
+        }
+
+        .forgot-password:hover {
+            text-decoration: underline;
+            color: #2980b9;
+        }
+
+        /* Submit Button (Login/Signup) */
+        .auth-button {
+            width: 100%;
+            padding: 15px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease, opacity 0.3s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .auth-button:hover:not(:disabled) {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        .auth-button:active:not(:disabled) {
+            transform: translateY(0);
+        }
+
+        .auth-button:disabled {
+            background-color: #95a5a6;
+            cursor: not-allowed;
+            opacity: 0.8;
+        }
+
+        /* Loading Spinner */
+        .spinner {
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-top: 3px solid #fff;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+            display: none;
+        }
+
+        .auth-button.loading .spinner {
+            display: block;
+        }
+
+        .auth-button.loading .button-text {
+            visibility: hidden;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Toggle Links (Login/Signup Switch) */
+        .toggle-form-link {
+            margin-top: 25px;
+            font-size: 0.9em;
+            color: #666;
+        }
+
+        .toggle-form-link a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+            cursor: pointer; /* Indicate clickable */
+            transition: color 0.2s ease;
+        }
+
+        .toggle-form-link a:hover {
+            text-decoration: underline;
+            color: #2980b9;
+        }
+
+        /* Validation Feedback */
+        .error-message {
+            color: #e74c3c;
+            font-size: 0.8em;
+            margin-top: 5px;
+            text-align: left;
+            display: none;
+        }
+
+        .form-group.error input {
+            border-color: #e74c3c;
+            box-shadow: 0 0 5px rgba(231, 76, 60, 0.3);
+        }
+
+        /* General form error messages (above inputs) */
+        .general-error {
+            color: #e74c3c;
+            font-size: 0.9em;
+            margin-bottom: 20px;
+            padding: 10px;
+            background-color: #fcebeb;
+            border: 1px solid #e74c3c;
+            border-radius: 5px;
+            display: none;
+        }
+
+        /* Form Visibility Management */
+        #loginForm, #signupForm {
+            display: none; /* Hidden by default, JavaScript will show one */
+            animation: slideIn 0.5s ease-out; /* Smooth slide-in effect */
+        }
+
+        #loginForm.active, #signupForm.active {
+            display: block; /* Show active form */
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 480px) {
+            .auth-container {
+                padding: 30px 20px;
+                margin: 20px; /* Add some margin on very small screens to prevent sticking to edges */
+            }
+
+            .auth-container h2 {
+                font-size: 1.8em;
+            }
+
+            .form-group input {
+                padding: 12px 15px 12px 40px;
+                font-size: 0.95em;
+            }
+
+            .form-group i {
+                left: 15px;
+                font-size: 1.1em;
+            }
+
+            .password-toggle {
+                right: 10px;
+            }
+
+            .options-group {
+                flex-direction: column;
+                gap: 10px;
+                align-items: flex-start;
+            }
+
+            .auth-button {
+                padding: 12px;
+                font-size: 1em;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="auth-container">
+        <form id="loginForm" class="active"> <h2>Login to Suratshop</h2>
+            <div id="loginGeneralError" class="general-error"></div>
+
+            <div class="form-group" id="loginEmailGroup">
+                <label for="loginEmail">Email or Username</label>
+                <i class="fas fa-user"></i>
+                <input type="text" id="loginEmail" name="email" placeholder="Enter your email or username" required autocomplete="username">
+                <div class="error-message" id="loginEmailError"></div>
+            </div>
+
+            <div class="form-group" id="loginPasswordGroup">
+                <label for="loginPassword">Password</label>
+                <i class="fas fa-lock"></i>
+                <input type="password" id="loginPassword" name="password" placeholder="Enter your password" required autocomplete="current-password">
+                <button type="button" id="loginPasswordToggle" class="password-toggle" aria-label="Toggle password visibility">
+                    <i class="fas fa-eye"></i>
+                </button>
+                <div class="error-message" id="loginPasswordError"></div>
+            </div>
+
+            <div class="options-group">
+                <div class="checkbox-group">
+                    <input type="checkbox" id="rememberMe" name="rememberMe">
+                    <label for="rememberMe">Remember Me</label>
+                </div>
+                <a href="#" class="forgot-password">Forgot Password?</a>
+            </div>
+
+            <button type="submit" class="auth-button" id="loginButton">
+                <span class="button-text">Login</span>
+                <span class="spinner"></span>
+            </button>
+
+            <p class="toggle-form-link">Don't have an account? <a href="#" id="showSignup">Register here</a></p>
+        </form>
+
+        <form id="signupForm">
+            <h2>Create Your Account</h2>
+            <div id="signupGeneralError" class="general-error"></div>
+
+            <div class="form-group" id="firstNameGroup">
+                <label for="firstName">First Name</label>
+                <i class="fas fa-user"></i>
+                <input type="text" id="firstName" name="firstName" placeholder="Enter your first name" required autocomplete="given-name">
+                <div class="error-message" id="firstNameError"></div>
+            </div>
+
+            <div class="form-group" id="lastNameGroup">
+                <label for="lastName">Last Name</label>
+                <i class="fas fa-user"></i>
+                <input type="text" id="lastName" name="lastName" placeholder="Enter your last name" required autocomplete="family-name">
+                <div class="error-message" id="lastNameError"></div>
+            </div>
+
+            <div class="form-group" id="signupEmailGroup">
+                <label for="signupEmail">Email Address</label>
+                <i class="fas fa-envelope"></i>
+                <input type="email" id="signupEmail" name="email" placeholder="Enter your email address" required autocomplete="email">
+                <div class="error-message" id="signupEmailError"></div>
+            </div>
+
+            <div class="form-group" id="signupPasswordGroup">
+                <label for="signupPassword">Password</label>
+                <i class="fas fa-lock"></i>
+                <input type="password" id="signupPassword" name="password" placeholder="Create a password" required autocomplete="new-password">
+                <button type="button" id="signupPasswordToggle" class="password-toggle" aria-label="Toggle password visibility">
+                    <i class="fas fa-eye"></i>
+                </button>
+                <div class="error-message" id="signupPasswordError"></div>
+            </div>
+
+            <div class="form-group" id="confirmPasswordGroup">
+                <label for="confirmPassword">Confirm Password</label>
+                <i class="fas fa-lock"></i>
+                <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm your password" required autocomplete="new-password">
+                <button type="button" id="confirmPasswordToggle" class="password-toggle" aria-label="Toggle password visibility">
+                    <i class="fas fa-eye"></i>
+                </button>
+                <div class="error-message" id="confirmPasswordError"></div>
+            </div>
+
+            <div class="options-group" style="justify-content: flex-start;">
+                 <div class="checkbox-group">
+                    <input type="checkbox" id="termsAgree" name="termsAgree" required>
+                    <label for="termsAgree">I agree to the <a href="#" class="forgot-password">Terms & Conditions</a></label>
+                </div>
+            </div>
+
+
+            <button type="submit" class="auth-button" id="signupButton">
+                <span class="button-text">Sign Up</span>
+                <span class="spinner"></span>
+            </button>
+
+            <p class="toggle-form-link">Already have an account? <a href="#" id="showLogin">Login here</a></p>
+        </form>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // --- DOM Elements ---
+            const loginForm = document.getElementById('loginForm');
+            const signupForm = document.getElementById('signupForm');
+            const showSignupLink = document.getElementById('showSignup');
+            const showLoginLink = document.getElementById('showLogin');
+
+            // Login Form Elements
+            const loginEmailInput = document.getElementById('loginEmail');
+            const loginPasswordInput = document.getElementById('loginPassword');
+            const loginPasswordToggle = document.getElementById('loginPasswordToggle');
+            const loginButton = document.getElementById('loginButton');
+            const loginEmailGroup = document.getElementById('loginEmailGroup');
+            const loginPasswordGroup = document.getElementById('loginPasswordGroup');
+            const loginEmailError = document.getElementById('loginEmailError');
+            const loginPasswordError = document.getElementById('loginPasswordError');
+            const loginGeneralError = document.getElementById('loginGeneralError');
+
+            // Signup Form Elements
+            const firstNameInput = document.getElementById('firstName');
+            const lastNameInput = document.getElementById('lastName');
+            const signupEmailInput = document.getElementById('signupEmail');
+            const signupPasswordInput = document.getElementById('signupPassword');
+            const confirmPasswordInput = document.getElementById('confirmPassword');
+            const signupPasswordToggle = document.getElementById('signupPasswordToggle');
+            const confirmPasswordToggle = document.getElementById('confirmPasswordToggle');
+            const signupButton = document.getElementById('signupButton');
+            const termsAgreeCheckbox = document.getElementById('termsAgree');
+
+            const firstNameGroup = document.getElementById('firstNameGroup');
+            const lastNameGroup = document.getElementById('lastNameGroup');
+            const signupEmailGroup = document.getElementById('signupEmailGroup');
+            const signupPasswordGroup = document.getElementById('signupPasswordGroup');
+            const confirmPasswordGroup = document.getElementById('confirmPasswordGroup');
+            const firstNameError = document.getElementById('firstNameError');
+            const lastNameError = document.getElementById('lastNameError');
+            const signupEmailError = document.getElementById('signupEmailError');
+            const signupPasswordError = document.getElementById('signupPasswordError'); // Corrected typo here
+            const confirmPasswordError = document.getElementById('confirmPasswordError');
+            const signupGeneralError = document.getElementById('signupGeneralError');
+
+            // --- Form Toggling Logic ---
+            function showForm(formToShow) {
+                // Remove active class from both forms and hide them
+                loginForm.classList.remove('active');
+                signupForm.classList.remove('active');
+                loginForm.style.display = 'none';
+                signupForm.style.display = 'none';
+
+                // Add active class to the target form and display it
+                if (formToShow === 'login') {
+                    loginForm.classList.add('active');
+                    loginForm.style.display = 'block';
+                    resetFormErrors(signupForm); // Clear errors from the form being hidden
+                } else if (formToShow === 'signup') {
+                    signupForm.classList.add('active');
+                    signupForm.style.display = 'block';
+                    resetFormErrors(loginForm); // Clear errors from the form being hidden
+                }
+            }
+
+            function resetFormErrors(form) {
+                form.querySelectorAll('.error-message').forEach(el => {
+                    el.textContent = '';
+                    el.style.display = 'none';
+                });
+                form.querySelectorAll('.form-group').forEach(el => {
+                    el.classList.remove('error');
+                });
+                form.querySelectorAll('.general-error').forEach(el => {
+                    el.textContent = '';
+                    el.style.display = 'none';
+                });
+                form.reset(); // Clear form inputs
+            }
+
+            showSignupLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                showForm('signup');
+            });
+
+            showLoginLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                showForm('login');
+            });
+
+            // Ensure the login form is shown initially on page load
+            showForm('login');
+
+            // --- Password Visibility Toggle for BOTH Forms ---
+            function setupPasswordToggle(passwordInput, toggleButton) {
+                toggleButton.addEventListener('click', function() {
+                    const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                    passwordInput.setAttribute('type', type);
+                    this.querySelector('i').classList.toggle('fa-eye');
+                    this.querySelector('i').classList.toggle('fa-eye-slash');
+                    this.setAttribute('aria-label', type === 'password' ? 'Show password' : 'Hide password');
+                });
+            }
+            setupPasswordToggle(loginPasswordInput, loginPasswordToggle);
+            setupPasswordToggle(signupPasswordInput, signupPasswordToggle);
+            setupPasswordToggle(confirmPasswordInput, confirmPasswordToggle);
+
+
+            // --- Validation Functions ---
+            const validateEmail = (email) => {
+                return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+            };
+
+            const validatePasswordStrength = (password) => {
+                const errors = [];
+                if (password.length < 8) {
+                    errors.push('Password must be at least 8 characters long.');
+                }
+                if (!/[A-Z]/.test(password)) {
+                    errors.push('Password must contain at least one uppercase letter.');
+                }
+                if (!/[a-z]/.test(password)) {
+                    errors.push('Password must contain at least one lowercase letter.');
+                }
+                if (!/[0-9]/.test(password)) {
+                    errors.push('Password must contain at least one number.');
+                }
+                if (!/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password)) {
+                    errors.push('Password must contain at least one special character (!@#$%^&*...).');
+                }
+                return errors;
+            };
+
+            function showFieldError(element, errorText, groupElement) {
+                element.innerHTML = errorText; // Use innerHTML to allow <br> tags
+                element.style.display = 'block';
+                groupElement.classList.add('error');
+            }
+
+            function hideFieldError(groupElement, errorElement) {
+                groupElement.classList.remove('error');
+                errorElement.innerHTML = '';
+                errorElement.style.display = 'none';
+            }
+
+            // --- Login Form Submission ---
+            loginForm.addEventListener('submit', async function(event) {
+                event.preventDefault();
+                resetFormErrors(loginForm); // Clear previous errors
+
+                let isValid = true;
+                const emailValue = loginEmailInput.value.trim();
+                const passwordValue = loginPasswordInput.value.trim();
+
+                // Validate Email/Username
+                if (emailValue === '') {
+                    showFieldError(loginEmailError, 'Email or username cannot be empty.', loginEmailGroup);
+                    isValid = false;
+                }
+                else if (emailValue.includes('@') && !validateEmail(emailValue)) {
+                    showFieldError(loginEmailError, 'Please enter a valid email address.', loginEmailGroup);
+                    isValid = false;
+                }
+
+                // Validate Password
+                if (passwordValue === '') {
+                    showFieldError(loginPasswordError, 'Password cannot be empty.', loginPasswordGroup);
+                    isValid = false;
+                } else if (passwordValue.length < 6) { // A basic length check for login
+                     showFieldError(loginPasswordError, 'Password too short.', loginPasswordGroup);
+                     isValid = false;
+                }
+
+
+                if (isValid) {
+                    loginButton.classList.add('loading');
+                    loginButton.disabled = true;
+
+                    try {
+                        // Simulate API call for login
+                        const response = await new Promise(resolve => setTimeout(() => {
+                            const isLoginSuccessful = (emailValue === 'user@example.com' || emailValue === 'demo') && passwordValue === 'Password123!';
+                            if (isLoginSuccessful) {
+                                resolve({ success: true, message: 'Login successful!' });
+                            } else {
+                                resolve({ success: false, message: 'Invalid email/username or password.' });
+                            }
+                        }, 2000));
+
+                        if (response.success) {
+                            alert(response.message);
+                            window.location.href = 'my-account-overview.html'; // Redirect to dashboard
+                        } else {
+                            loginGeneralError.textContent = response.message;
+                            loginGeneralError.style.display = 'block';
+                        }
+                    } catch (error) {
+                        console.error('Login error:', error);
+                        loginGeneralError.textContent = 'An unexpected error occurred. Please try again.';
+                        loginGeneralError.style.display = 'block';
+                    } finally {
+                        loginButton.classList.remove('loading');
+                        loginButton.disabled = false;
+                    }
+                }
+            });
+
+            // --- Signup Form Submission ---
+            signupForm.addEventListener('submit', async function(event) {
+                event.preventDefault();
+                resetFormErrors(signupForm); // Clear previous errors
+
+                let isValid = true;
+
+                // Validate First Name
+                if (firstNameInput.value.trim() === '') {
+                    showFieldError(firstNameError, 'First name cannot be empty.', firstNameGroup);
+                    isValid = false;
+                }
+
+                // Validate Last Name
+                if (lastNameInput.value.trim() === '') {
+                    showFieldError(lastNameError, 'Last name cannot be empty.', lastNameGroup);
+                    isValid = false;
+                }
+
+                // Validate Email
+                const signupEmailValue = signupEmailInput.value.trim();
+                if (signupEmailValue === '') {
+                    showFieldError(signupEmailError, 'Email address cannot be empty.', signupEmailGroup);
+                    isValid = false;
+                } else if (!validateEmail(signupEmailValue)) {
+                    showFieldError(signupEmailError, 'Please enter a valid email address.', signupEmailGroup);
+                    isValid = false;
+                }
+
+                // Validate Password Strength
+                const signupPasswordValue = signupPasswordInput.value.trim();
+                const passwordStrengthErrors = validatePasswordStrength(signupPasswordValue);
+                if (passwordStrengthErrors.length > 0) {
+                    showFieldError(signupPasswordError, passwordStrengthErrors.join('<br>'), signupPasswordGroup);
+                    isValid = false;
+                }
+
+                // Validate Confirm Password
+                const confirmPasswordValue = confirmPasswordInput.value.trim();
+                if (confirmPasswordValue === '') {
+                    showFieldError(confirmPasswordError, 'Please confirm your password.', confirmPasswordGroup);
+                    isValid = false;
+                } else if (signupPasswordValue !== confirmPasswordValue) {
+                    showFieldError(confirmPasswordError, 'Passwords do not match.', confirmPasswordGroup);
+                    isValid = false;
+                }
+
+                // Validate Terms & Conditions checkbox
+                if (!termsAgreeCheckbox.checked) {
+                    signupGeneralError.textContent = 'You must agree to the Terms & Conditions.';
+                    signupGeneralError.style.display = 'block';
+                    isValid = false;
+                }
+
+
+                if (isValid) {
+                    signupButton.classList.add('loading');
+                    signupButton.disabled = true;
+
+                    try {
+                        // Simulate API call for signup
+                        const response = await new Promise(resolve => setTimeout(() => {
+                            const isRegistrationSuccessful = true; // For demo, assume success
+                            if (isRegistrationSuccessful) {
+                                resolve({ success: true, message: 'Registration successful! You can now log in.' });
+                            } else {
+                                resolve({ success: false, message: 'Registration failed. Email might already be registered.' });
+                            }
+                        }, 2000));
+
+                        if (response.success) {
+                            alert(response.message);
+                            showForm('login'); // Automatically switch to login after successful signup
+                            resetFormErrors(signupForm); // Clear signup form after success
+                        } else {
+                            signupGeneralError.textContent = response.message;
+                            signupGeneralError.style.display = 'block';
+                        }
+                    } catch (error) {
+                        console.error('Signup error:', error);
+                        signupGeneralError.textContent = 'An unexpected error occurred during registration. Please try again.';
+                        signupGeneralError.style.display = 'block';
+                    } finally {
+                        signupButton.classList.remove('loading');
+                        signupButton.disabled = false;
+                    }
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>

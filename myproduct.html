@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suratshop - Seller Dashboard: My Products</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="myproduct.css">
+</head>
+<body>
+
+    <header class="main-header">
+        <div class="brand-section">
+            <img src="Suratshoplogo.jpg" alt="Suratshop Logo" class="brand-logo">
+            <h1 class="brand-heading">Suratshop</h1>
+        </div>
+        <nav class="main-nav-links">
+            <a href="homepage.html">Home</a>
+            <a href="#about">About Us</a>
+            <a href="#contact">Contact</a>
+            <a href="login.html" class="account-link">
+                <i class="fas fa-user-circle"></i> Account
+            </a>
+        </nav>
+    </header>
+
+    <div class="dashboard-wrapper">
+        <aside class="sidebar">
+            <h2>Seller Dashboard</h2>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="seller-dashboard-overview.html"><i class="fas fa-tachometer-alt"></i> Overview</a></li>
+                    <li><a href="seller-dashboard-orders.html"><i class="fas fa-box-open"></i> Orders</a></li>
+                    <li><a href="myproduct.html" class="active"><i class="fas fa-tag"></i> My Products</a></li>
+                    <li><a href="seller-dashboard-analytics.html"><i class="fas fa-chart-bar"></i> Analytics</a></li>
+                    <li><a href="seller-dashboard-settings.html"><i class="fas fa-cog"></i> Settings</a></li>
+                    <li><a href="login.html"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="dashboard-content">
+            <h1>My Products</h1>
+
+            <div class="product-list-header">
+                <h2>All Listed Products</h2>
+                <button class="add-product-btn" onclick="location.href='addproductsellerpage.html'">
+                    <i class="fas fa-plus-circle"></i> <a href="addproduct.html">Add New Product</a>
+                </button>
+            </div>
+
+            <div class="product-table-container">
+                <table class="product-table">
+                    <thead>
+                        <tr>
+                            <th>Product</th>
+                            <th>Category</th>
+                            <th>Price</th>
+                            <th>Stock</th>
+                            <th>Condition</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div class="product-name-cell">
+                                    <img src="https://via.placeholder.com/50x50?text=Shirt" alt="Men's Casual Shirt" class="product-image">
+                                    Men's Casual Shirt
+                                </div>
+                            </td>
+                            <td>Men's Fashion</td>
+                            <td>₹ 799.00</td>
+                            <td>150</td>
+                            <td><span class="condition-badge condition-new">New</span></td>
+                            <td class="action-buttons">
+                                <button class="edit-btn" title="Edit Product"><i class="fas fa-edit"></i> Edit</button>
+                                <button class="delete-btn" title="Delete Product"><i class="fas fa-trash-alt"></i> Delete</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="product-name-cell">
+                                    <img src="https://via.placeholder.com/50x50?text=Saree" alt="Silk Saree" class="product-image">
+                                    Elegant Silk Saree
+                                </div>
+                            </td>
+                            <td>Women's Fashion</td>
+                            <td>₹ 2,499.00</td>
+                            <td>80</td>
+                            <td><span class="condition-badge condition-new">New</span></td>
+                            <td class="action-buttons">
+                                <button class="edit-btn" title="Edit Product"><i class="fas fa-edit"></i> Edit</button>
+                                <button class="delete-btn" title="Delete Product"><i class="fas fa-trash-alt"></i> Delete</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="product-name-cell">
+                                    <img src="https://via.placeholder.com/50x50?text=Headphones" alt="Wireless Headphones" class="product-image">
+                                    Wireless Headphones (Used)
+                                </div>
+                            </td>
+                            <td>Electronics</td>
+                            <td>₹ 1,250.00</td>
+                            <td>20</td>
+                            <td><span class="condition-badge condition-old">Used</span></td>
+                            <td class="action-buttons">
+                                <button class="edit-btn" title="Edit Product"><i class="fas fa-edit"></i> Edit</button>
+                                <button class="delete-btn" title="Delete Product"><i class="fas fa-trash-alt"></i> Delete</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="product-name-cell">
+                                    <img src="https://via.placeholder.com/50x50?text=Book" alt="Fantasy Novel" class="product-image">
+                                    Fantasy Novel Book
+                                </div>
+                            </td>
+                            <td>Books & Media</td>
+                            <td>₹ 350.00</td>
+                            <td>5</td>
+                            <td><span class="condition-badge condition-old">Used</span></td>
+                            <td class="action-buttons">
+                                <button class="edit-btn" title="Edit Product"><i class="fas fa-edit"></i> Edit</button>
+                                <button class="delete-btn" title="Delete Product"><i class="fas fa-trash-alt"></i> Delete</button>
+                            </td>
+                        </tr>
+                        </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+
+    <footer class="main-footer">
+        <p>&copy; 2025 Suratshop. All rights reserved. | <a href="#privacy">Privacy Policy</a> | <a href="#terms">Terms of Service</a></p>
+    </footer>
+
+    <script>
+        // No specific JS needed for this static product list.
+        // The linking is handled directly by the onclick event on the button.
+    </script>
+
+</body>
+</html>
